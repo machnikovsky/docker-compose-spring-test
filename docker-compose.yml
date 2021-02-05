@@ -1,0 +1,24 @@
+version: '3'
+services:
+  api:
+    build: ./docker-compose-spring
+    ports:
+      - "9090:9090"
+    depends_on:
+      - database
+  client:
+    build: ./docker-compose-spring-clinet
+    ports:
+      - "7070:7070"
+    depends_on:
+      - api
+  database:
+    container_name: 'postgresql'
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: animaldb
+    ports:
+      - "5432:5432"
+    restart: always
